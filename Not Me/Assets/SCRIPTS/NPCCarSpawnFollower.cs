@@ -63,6 +63,20 @@ public class NPCCarSpawnFollower : MonoBehaviour
     [Tooltip("Trigger parameter name in the Animator for the 'exit car' animation. Leave blank to skip.")]
     public string exitCarTriggerParam = "ExitCar";
 
+    [Header("Spawn Audio")]
+    [Tooltip("AudioSource component on this GameObject used to play the spawn sound.\nAdd an AudioSource component and drag it here.")]
+    public AudioSource spawnAudioSource;
+
+    [Tooltip("The one-shot audio clip that plays the moment the NPC appears.")]
+    public AudioClip spawnClip;
+
+    [Range(0f, 1f)]
+    [Tooltip("Volume of the spawn sound (0 = silent, 1 = full).")]
+    public float spawnVolume = 1f;
+
+    [Tooltip("Enable full 3D spatial audio for VR (sound comes from NPC position).")]
+    public bool spatialAudio = true;
+
     // ─── Private State ───────────────────────────────────────────
 
     private NavMeshAgent _agent;
@@ -76,6 +90,15 @@ public class NPCCarSpawnFollower : MonoBehaviour
     {
         _agent    = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+
+        // Configure spawn audio source for VR spatial audio
+        if (spawnAudioSource != null)
+        {
+            spawnAudioSource.playOnAwake  = false;
+            spawnAudioSource.loop         = false;
+            spawnAudioSource.spatialBlend = spatialAudio ? 1f : 0f;
+            spawnAudioSource.spatialize   = spatialAudio;
+        }
 
         // Hide NPC at the start
         SetNPCVisible(false);
@@ -119,6 +142,9 @@ public class NPCCarSpawnFollower : MonoBehaviour
         // Show NPC at spawn point
         transform.position = spawnPoint != null ? spawnPoint.position : transform.position;
         SetNPCVisible(true);
+
+        // Play one-shot spawn sound instantly at full volume
+        PlaySpawnAudio();
 
         // Play exit-car animation if configured
         if (!string.IsNullOrEmpty(exitCarTriggerParam))
@@ -168,6 +194,15 @@ public class NPCCarSpawnFollower : MonoBehaviour
                 rotationSpeed * Time.deltaTime
             );
         }
+    }
+
+    // ─── Spawn Audio ─────────────────────────────────────────────
+
+    private void PlaySpawnAudio()
+    {
+        if (spawnAudioSource == null || spawnClip == null) return;
+
+        spawnAudioSource.PlayOneShot(spawnClip, spawnVolume);
     }
 
     // ─── Helpers ─────────────────────────────────────────────────

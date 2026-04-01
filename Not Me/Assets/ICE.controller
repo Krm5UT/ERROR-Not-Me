@@ -84,7 +84,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 578e5b911f8c26f49b7e8b4bc81d4e5a,
+  m_Motion: {fileID: -203655887218126122, guid: c5bc726262cd6a049a58f0bd81f8cef4,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -104,13 +104,7 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: Idle
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
@@ -146,7 +140,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1756174544175713810, guid: 6e0bf1b289ba11f4fb547a6420880c27,
+  m_Motion: {fileID: -203655887218126122, guid: 65eae3e64b158fe4094e5b7fca4cc96a,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
